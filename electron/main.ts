@@ -1,57 +1,56 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, Tray } from 'electron';
+import * as ElectronStore from 'electron-store';
 
-let mainWindow: BrowserWindow | null
+import { SpotifyService, SlackService, AuthService } from './services/';
+import { MainWindowGenerator, TrayGenerator } from './generators';
+import { PlayerController } from './controllers';
 
-declare const MAIN_WINDOW_WEBPACK_ENTRY: string
-declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 
-// const assetsPath =
-//   process.env.NODE_ENV === 'production'
-//     ? process.resourcesPath
-//     : app.getAppPath()
+let mainWindow: BrowserWindow;
+let tray: Tray;
 
-function createWindow () {
-  mainWindow = new BrowserWindow({
-    // icon: path.join(assetsPath, 'assets', 'icon.png'),
-    width: 1100,
-    height: 700,
-    backgroundColor: '#191622',
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
-    }
-  })
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', async () => {
+  const store = new ElectronStore();
 
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+  if (true) { //! isDev
+    store.clear();
+  }
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
-}
+  const spotifyService = new SpotifyService();
+  const authService = new AuthService();
+  const slackService = new SlackService(authService);
 
-async function registerListeners () {
-  /**
-   * This comes from bridge integration, check bridge.ts
-   */
-  ipcMain.on('message', (_, message) => {
-    console.log(message)
-  })
-}
+  const playerController = new PlayerController(spotifyService, slackService, store);
+  playerController.hydrateAccessToken();
 
-app.on('ready', createWindow)
-  .whenReady()
-  .then(registerListeners)
-  .catch(e => console.error(e))
+  const mainWindowGenerator = new MainWindowGenerator(playerController);
+  mainWindow = mainWindowGenerator.createMainWindow();
 
+  const trayGenerator = new TrayGenerator(mainWindow);
+  tray = trayGenerator.createTray();
+
+  app.dock.hide();
+});
+
+// SSL/TSL: this is the self signed certificate support
+app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
+  // On certificate error we disable default behaviour (stop loading the page)
+  // and we then say "it is all fine - true" to the callback
+  event.preventDefault();
+  callback(true);
+});
+
+// Quit when all windows are closed, except on macOS. There, it's common
+// for applications and their menu bar to stay active until the user quits
+// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
+});
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
-  }
-})
+// In this file you can include the rest of your app"s specific main process
+// code. You can also put them in separate files and require them here.

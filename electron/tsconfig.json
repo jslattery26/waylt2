@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "commonjs",
+    "sourceMap": true,
+    "strict": true,
+    "outDir": "../build",
+    "rootDir": "../",
+    "noEmitOnError": true,
+    "typeRoots": ["node_modules/@types"],
+    "baseUrl": "",
+    "resolveJsonModule": true,
+    "paths": {
+      "*": ["typings/*"]
+    }
+  }
+}

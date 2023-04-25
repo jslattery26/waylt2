@@ -6,6 +6,7 @@ import 'package:waylt3/global_providers.dart';
 import 'package:waylt3/main_pre.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:waylt3/spotify/spotify_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,7 @@ void main() async {
       sharedPreferencesProvider.overrideWithValue(sharedPreferences),
     ],
   );
+  container.read(spotifyServiceProvider);
   final appConfig = AppConfig(
     appEnvironment: AppEnvironment.dev,
     appName: 'Waylt3(dev)',

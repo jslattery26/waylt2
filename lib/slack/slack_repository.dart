@@ -28,7 +28,24 @@ class SlackRepository {
     if (res.statusCode != 200) {}
     final data = json.decode(res.body);
     final name = data['profile']['real_name'];
-    final image = data['profile']['image_192'];
+    final image = data['profile']['image_72'];
     return Tuple2(name, image);
+  }
+
+  Future<void> postStatus(String message, String accessToken) async {
+    Map profile = {
+      'status_text': message,
+      'status_emoji': ':musical_note:',
+      'status_expiration': 0,
+    };
+    final j = json.encode(profile);
+    final urlEncoded = Uri.encodeComponent(j);
+    await http.post(
+      Uri.https(
+        'slack.com',
+        '/api/users.profile.set?profile=$urlEncoded&pretty=1',
+      ),
+      headers: {'Authorization': 'Bearer $accessToken'},
+    );
   }
 }

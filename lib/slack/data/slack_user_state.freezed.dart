@@ -69,22 +69,22 @@ class _$SlackUserStateCopyWithImpl<$Res, $Val extends SlackUserState>
 }
 
 /// @nodoc
-abstract class _$$_SlackUserStatateCopyWith<$Res>
+abstract class _$$_SlackUserStateCopyWith<$Res>
     implements $SlackUserStateCopyWith<$Res> {
-  factory _$$_SlackUserStatateCopyWith(
-          _$_SlackUserStatate value, $Res Function(_$_SlackUserStatate) then) =
-      __$$_SlackUserStatateCopyWithImpl<$Res>;
+  factory _$$_SlackUserStateCopyWith(
+          _$_SlackUserState value, $Res Function(_$_SlackUserState) then) =
+      __$$_SlackUserStateCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String accessToken, String name, String image});
 }
 
 /// @nodoc
-class __$$_SlackUserStatateCopyWithImpl<$Res>
-    extends _$SlackUserStateCopyWithImpl<$Res, _$_SlackUserStatate>
-    implements _$$_SlackUserStatateCopyWith<$Res> {
-  __$$_SlackUserStatateCopyWithImpl(
-      _$_SlackUserStatate _value, $Res Function(_$_SlackUserStatate) _then)
+class __$$_SlackUserStateCopyWithImpl<$Res>
+    extends _$SlackUserStateCopyWithImpl<$Res, _$_SlackUserState>
+    implements _$$_SlackUserStateCopyWith<$Res> {
+  __$$_SlackUserStateCopyWithImpl(
+      _$_SlackUserState _value, $Res Function(_$_SlackUserState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -94,7 +94,7 @@ class __$$_SlackUserStatateCopyWithImpl<$Res>
     Object? name = null,
     Object? image = null,
   }) {
-    return _then(_$_SlackUserStatate(
+    return _then(_$_SlackUserState(
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -113,8 +113,8 @@ class __$$_SlackUserStatateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SlackUserStatate extends _SlackUserStatate {
-  const _$_SlackUserStatate(
+class _$_SlackUserState extends _SlackUserState {
+  const _$_SlackUserState(
       {this.accessToken = '', this.name = '', this.image = ''})
       : super._();
 
@@ -137,7 +137,7 @@ class _$_SlackUserStatate extends _SlackUserStatate {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SlackUserStatate &&
+            other is _$_SlackUserState &&
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken) &&
             (identical(other.name, name) || other.name == name) &&
@@ -150,16 +150,16 @@ class _$_SlackUserStatate extends _SlackUserStatate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SlackUserStatateCopyWith<_$_SlackUserStatate> get copyWith =>
-      __$$_SlackUserStatateCopyWithImpl<_$_SlackUserStatate>(this, _$identity);
+  _$$_SlackUserStateCopyWith<_$_SlackUserState> get copyWith =>
+      __$$_SlackUserStateCopyWithImpl<_$_SlackUserState>(this, _$identity);
 }
 
-abstract class _SlackUserStatate extends SlackUserState {
-  const factory _SlackUserStatate(
+abstract class _SlackUserState extends SlackUserState {
+  const factory _SlackUserState(
       {final String accessToken,
       final String name,
-      final String image}) = _$_SlackUserStatate;
-  const _SlackUserStatate._() : super._();
+      final String image}) = _$_SlackUserState;
+  const _SlackUserState._() : super._();
 
   @override
   String get accessToken;
@@ -169,6 +169,6 @@ abstract class _SlackUserStatate extends SlackUserState {
   String get image;
   @override
   @JsonKey(ignore: true)
-  _$$_SlackUserStatateCopyWith<_$_SlackUserStatate> get copyWith =>
+  _$$_SlackUserStateCopyWith<_$_SlackUserState> get copyWith =>
       throw _privateConstructorUsedError;
 }

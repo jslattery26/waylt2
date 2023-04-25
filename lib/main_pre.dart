@@ -81,8 +81,9 @@ class MainApp extends ConsumerWidget {
     ];
 
     return DevicePreview(
-      enabled: config.isLocal && kIsWeb ||
-          (!kIsWeb && defaultTargetPlatform == TargetPlatform.macOS),
+      enabled: false,
+      // enabled: config.isLocal && kIsWeb ||
+      //     (!kIsWeb && defaultTargetPlatform == TargetPlatform.macOS),
       tools: devicePreviewTools,
       builder: (context) {
         return const MyApp();

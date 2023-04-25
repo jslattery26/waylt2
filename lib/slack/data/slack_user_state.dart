@@ -9,5 +9,5 @@ class SlackUserState with _$SlackUserState {
     @Default('') String accessToken,
     @Default('') String name,
     @Default('') String image,
-  }) = _SlackUserStatate;
+  }) = _SlackUserState;
 }

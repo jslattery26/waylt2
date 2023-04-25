@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:waylt3/extensions/preferences_extensions.dart';
 import 'package:waylt3/global_providers.dart';
+import 'package:waylt3/slack/data/slack_user_state.dart';
 import 'package:waylt3/slack/slack_repository.dart';
-import 'package:waylt3/slack/slack_user_state.dart';
 
 final slackUserModelProvider =
     StateNotifierProvider<SlackUserModel, SlackUserState>(
@@ -22,6 +22,7 @@ class SlackUserModel extends StateNotifier<SlackUserState> {
           SlackUserState(
             accessToken: preferences.getString('accessToken', ''),
             name: preferences.getString('name', ''),
+            image: preferences.getString('image', ''),
           ),
         );
 
@@ -50,12 +51,19 @@ class SlackUserModel extends StateNotifier<SlackUserState> {
     );
   }
 
+  postStatus(String message) async {
+    final repo = ref.read(slackRepositoryProvider);
+    repo.postStatus(message, state.accessToken);
+  }
+
   setName(String name) {
     _preferences.setString('name', name);
     state = state.copyWith(
       name: name,
     );
   }
+
+  setCurrentTrack() {}
 
   resetAll() {
     state = state.copyWith(
